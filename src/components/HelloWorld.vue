@@ -1,48 +1,45 @@
 /* eslint-disable vue/no-use-v-if-with-v-for */
 <template>
-  <div role="region" aria-live="polite" aria-relevant="all">
+  <div role="region" aria-live="polite" aria-relevant="all" class="container">
       <div v-cloak>
 
         <!--PROVIDER FILTER START -->
-        <div class="row tab-row">
-          <a id="viewMap" v-if="listVisible" class="btn btn-primary" href="#viewMap" v-on:click="mapVisible = true, listVisible = false, navSticky = false">View by map <span class="fa fa-map" aria-hidden="true"></span></a>
-          <a v-if="mapVisible" id="viewList" class="btn btn-primary" href="#viewList" v-on:click="mapVisible = false, listVisible = true, navSticky = true">View by list <span class="fa fa-list" aria-hidden="true"></span></a>
+        <div class="row">
+          <div class="col">
+          <a id="viewMap" v-if="listVisible" class="btn btn-primary" href="#viewMap" v-on:click="mapVisible = true, listVisible = false">View by map <span class="fa fa-map" aria-hidden="true"></span></a>
+          <a v-if="mapVisible" id="viewList" class="btn btn-primary" href="#viewList" v-on:click="mapVisible = false, listVisible = true">View by list <span class="fa fa-list" aria-hidden="true"></span></a>
         </div>
+        </div>
+
+
+
+
         <div id="filters">
-       
-          <div id="filterRow" class="container">
+          <div id="filterRow">
             <div class="row">
               <div class="col-sm-8">
-
+                <span class="material-icons" id="search-icon">search</span>  
                 <label for="providerSearch">Search</label>
-                <input type="text" id="providerSearch" class="form-control" placeholder="Search provider names" @click="resetZoom" v-model="searchPro" />
+                <input type="text" id="providerSearch" class="form-control" placeholder="Search provider names" v-model="searchPro" />
 
               </div>
 
 
 
               <div id="viewingTotal" class="col-sm-4">
-                <p class="lead" id="providerTotal" v-if="!loading && !errored">Viewing <span v-if="itemsCount == lessThan">all</span> <strong>{{itemsCount}}
+                <p class="align-bottom" id="providerTotal" v-if="!loading && !errored">Viewing <span v-if="itemsCount == lessThan">all</span> <strong>{{itemsCount}}
                   </strong> provider<span v-if="itemsCount > 1 || itemsCount == 0">s</span></p>
 
               </div>
-            </div>
-
-          </div>
-
-              <div class="col-sm-12">
-
-                <p><a type="button" href="#filter" id="filterButton" class="lowered collapsed" data-toggle="collapse" data-target="#filter-area" aria-expanded="false" aria-controls="filter-area"  @click="resetZoom">Filters</a></p>
-
-              </div>
-              <div class="collapse mb-2" id="filter-area">
-                      <section class="card card-body">
-      
-                      
-                        <!--<button class="btn btn-xs btn-danger" v-on:click="resetForm">Clear all filters <span class="fa fa-times-circle" aria-hidden="true"></span></button>-->
-                     
-           
-                        <div class="row">
+              <div class="col">
+                <div class="accordion" id="filterAccordion">
+                <div class="card">
+              <div class="card-header" id="filterHeader">
+                <h5 class="mb-0"><button class="btn btn-link collapsed" data-toggle="collapse" data-target="#dataTargetFilters" aria-expanded="true" aria-controls="dataTargetFilters">Filters<span tabindex="0" class="material-icons scroll-down-arrow">expand_more</span></button></h5>
+                </div>
+                <div id="dataTargetFilters" class="collapse" aria-labelledby="filterHeader" data-parent="#filterAccordion">
+                  <div class="card-body">
+                                            <div class="row">
                           <div class="col-sm-6">
                             <h4>Choose services offered</h4>
                             <div class="form-group">
@@ -115,42 +112,48 @@
                         </div>
                           </div>
                         </div>
-                      </section>
-      
-                    </div>
-  
+
+                  </div>
+                  </div>
+                  </div>
+              </div>
+              </div>
+            </div>
+
+          </div>
+
           
           
           
           <div id="filterButtons" class="row">
-            <div class="col-sm-12" v-if="itemsCount < lessThan" id="filterButtons">
+            <div class="col-sm-12" v-if="itemsCount < lessThan">
 
               <ul class="list-inline m-t-sm">
-                <li class="list-inline-item"><button v-if="itemsCount < lessThan" class="btn btn-xs btn-danger" v-on:click="resetForm">Clear all filters <span class="fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item" v-if="selectedProvider"><button class="btn btn-xs btn-default" v-on:click="selectedProvider = ''">{{this.selectedProvider}} <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-
-                <li class="list-inline-item" v-if="selectedMh"><button class="btn btn-xs btn-default" v-on:click="selectedMh = ''">Mental Health <span class="fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="selectedSud"><button class="btn btn-xs btn-default" v-on:click="selectedSud = ''">Substance Use <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="selectedCrisis"><button class="btn btn-xs btn-default" v-on:click="selectedCrisis = ''">Crisis <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="selectedOpioid"><button class="btn btn-xs btn-default" v-on:click="selectedOpioid = ''">Opioid Treatment <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="selectedDetox"><button class="btn btn-xs btn-default" v-on:click="selectedDetox= ''">Detox <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="selectedHousing"><button class="btn btn-xs btn-default" v-on:click="selectedHousing = ''">Housing <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="selectedSudres"><button class="btn btn-xs btn-default" v-on:click="selectedSudres = ''">Residential Substance Use Treatment <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="selectedMhres"><button class="btn btn-xs btn-default" v-on:click="selectedMhres= ''">Residential Mental Health Treatment <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="selectedInvoluntary"><button class="btn btn-xs btn-default" v-on:click="selectedInvoluntary = ''">Involuntary Commmitment <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-
-                <li class="list-inline-item"  v-if="selectedLocations"><button class="btn btn-xs btn-default" v-on:click="selectedLocations = ''">{{this.selectedLocations}} <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="searchText"><button class="btn btn-xs btn-default" v-on:click="searchText = ''">{{this.searchText}} <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-
-                <li class="list-inline-item"  v-if="selectedYouth"><button class="btn btn-xs btn-default" v-on:click="selectedYouth = ''">Youth <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="selectedAdults"><button class="btn btn-xs btn-default" v-on:click="selectedAdults = ''">Adults <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="selectedFamilies"><button class="btn btn-xs btn-default" v-on:click="selectedFamilies = ''">Families <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
-                <li class="list-inline-item"  v-if="selectedOlder"><button class="btn btn-xs btn-default" v-on:click="selectedOlder = ''">Older Adults <span class="fa fa fa-times-circle" aria-hidden="true"></span></button></li>
+                <li class="list-inline-item"><button v-if="itemsCount < lessThan" class="" v-on:click="resetForm">Clear all filters <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item" v-if="selectedProvider"><button class="" v-on:click="selectedProvider = ''">{{this.selectedProvider}}</button></li>
+                <li class="list-inline-item" v-if="selectedMh"><button class="" v-on:click="selectedMh = ''">Mental Health</button></li>
+                <li class="list-inline-item"  v-if="selectedSud"><button class="" v-on:click="selectedSud = ''">Substance Use</button></li>
+                <li class="list-inline-item"  v-if="selectedCrisis"><button class="" v-on:click="selectedCrisis = ''">Crisis</button></li>
+                <li class="list-inline-item"  v-if="selectedOpioid"><button class="" v-on:click="selectedOpioid = ''">Opioid Treatment</button></li>
+                <li class="list-inline-item"  v-if="selectedDetox"><button class="" v-on:click="selectedDetox= ''">Detox</button></li>
+                <li class="list-inline-item"  v-if="selectedHousing"><button class="" v-on:click="selectedHousing = ''">Housing</button></li>
+                <li class="list-inline-item"  v-if="selectedSudres"><button class="" v-on:click="selectedSudres = ''">Residential Substance Use Treatment</button></li>
+                <li class="list-inline-item"  v-if="selectedMhres"><button class="" v-on:click="selectedMhres= ''">Residential Mental Health Treatment</button></li>
+                <li class="list-inline-item"  v-if="selectedInvoluntary"><button class="" v-on:click="selectedInvoluntary = ''">Involuntary Commmitment</button></li>
+                <li class="list-inline-item"  v-if="selectedLocations"><button class="" v-on:click="selectedLocations = ''">{{this.selectedLocations}}</button></li>
+                <li class="list-inline-item"  v-if="searchText"><button class="" v-on:click="searchText = ''">{{this.searchText}}</button></li>
+                <li class="list-inline-item"  v-if="selectedYouth"><button class="" v-on:click="selectedYouth = ''">Youth</button></li>
+                <li class="list-inline-item"  v-if="selectedAdults"><button class="" v-on:click="selectedAdults = ''">Adults</button></li>
+                <li class="list-inline-item"  v-if="selectedFamilies"><button class="" v-on:click="selectedFamilies = ''">Families</button></li>
+                <li class="list-inline-item"  v-if="selectedOlder"><button class="" v-on:click="selectedOlder = ''">Older Adults</button></li>
 
               </ul>
             </div>
           </div>
         </div>
+       
 
 
 
@@ -171,7 +174,7 @@
             </div>
             <div class="panel-body">
               <p>Try refining your search or filters to see if there are any providers that match.</p>
-              <p class="text-center"><button class="btn btn-xs btn-danger" v-on:click="resetForm">Clear all filters <span class="fa fa-times-circle" aria-hidden="true"></span></button></p><br>
+              <p class="text-center"><button class="btn btn-xs btn-danger" v-on:click="resetForm">Clear all filters</button></p><br>
             </div>
           </div>
 
@@ -189,6 +192,7 @@
         </div>
 
           <!--CARD ROW CONTAINER START -->
+          <div v-if="listVisible">
           <div class="row" v-for="i in Math.ceil(computed_items.length / 3)" :key="i">
 
             <div :key="i" v-for="(items, i) in computed_items.slice((i - 1) * 3, i * 3)" class="col-md-4 mb-4">
@@ -261,6 +265,7 @@
             </div>
 
           </div>
+          </div>
       <!-- CARD ROW CONTAINER END -->
 
                 <!--LOADING ICON END -->
@@ -268,7 +273,7 @@
 
                     <div class="col-md-8 col-md-push-4 p-x-0">
                       <!-- MAP START -->
-                      <button type="button" id="return" @click="resetZoom()" class="resetControls btn btn-xs btn-danger">Reset zoom</button>
+                      
                       <button type="button" id="setLocation" @click="setLocation()" class="findControls btn btn-sm btn-success">Zoom to my location <span class="fa fa-crosshairs" aria-hidden="true"></span></button>
         
                       <l-map id="map" ref="map" :center="center" :bounds="bounds">
@@ -279,8 +284,8 @@
         
                         <div :key="i" v-for="(items, i) in computed_items">
         
-                          <l-marker @click="selectedMapAddress = items.address_address, selectedMapCoordinates = items.address.coordinates, pinZoom()" v-if="items.address_address" :lat-lng="[items.address.coordinates[1], items.address.coordinates[0]]">
-                            <l-popup>{{items.provider}}</l-popup>
+                          <l-marker @click="selectedMapAddress = items.address_address, selectedMapCoordinates = items.address.coordinates; pinZoom()" v-if="items.address_address" :lat-lng="[items.address.coordinates[1], items.address.coordinates[0]]">
+                            
                           </l-marker>
         
                         </div>
@@ -291,17 +296,16 @@
         
                     <div class="mapFlex col-md-4 col-md-pull-8 p-x-0">
         
-                      <div class="mapLoad text-center p-a" v-if="!selectedMapAddress">
+                      <div class="mapLoad p-a" v-if="!selectedMapAddress">
                         <h2 class="text-center">Search, filter or explore the map</h2>
-                        <img class="center-block" src="https://unpkg.com/leaflet@1.2.0/dist/images/marker-icon.png">
+                        <img class="text-center" src="https://unpkg.com/leaflet@1.2.0/dist/images/marker-icon.png">
                         <p>Click or tap a blue pin and details about that provider will appear in this space.</p>
-                        <img class="center-block" style="width:25px; height:41px;" src="https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png">
-                        <p>Click or tap the "Zoom to my location" button at the bottom of the map to see providers near you. (NOTE: You'll need to enable location services on your browser or phone for this feature to work.)</p>
-                        <div class="center-block text-center">
-                          <button id="filterButton2" type="button" class="btn btn-success lowered" @click="resetZoom" data-toggle="modal" data-target="#myModal">Filters <span class="fa fa-sliders" aria-hidden="true"></span>
-                                </button>
-                          <p>Use the search bar and/or click the filters button to narrow your results.</p>
-                        </div>
+                       
+                        <p>To find providers near you, click or tap the "Zoom to my location" button at the bottom of the map to zoom in to your current location. (NOTE: You'll need to enable location services on your browser or phone for this feature to work.)</p>
+                        
+                         
+                          <p>To narrow the results, use the search bar or click the filters button.</p>
+                     
                       </div>
                       <div :key="i" v-for="(items, i) in computed_map" class="providerContainer flex-container">
         
@@ -375,19 +379,17 @@
 </template>
 
 <script>
-import { LMap, LTileLayer, LMarker, LPopup} from 'vue2-leaflet';
+import { LMap, LTileLayer, LMarker} from 'vue2-leaflet';
 import axios from 'axios';
 export default {
   name: 'HelloWorld',
   components: {
     LMap,
     LTileLayer,
-    LMarker,
-    LPopup
+    LMarker
   },
   data() {
     return {
-      navSticky: true,
       mapVisible: false,
       listVisible: true,
       findLocation: false,
@@ -396,7 +398,7 @@ export default {
       bounds: [
         [49.004521, -117.037357],
         [45.645316, -124.588534]
-      ],
+      ],   
       url:
         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}",
       searchPro: "",
@@ -445,7 +447,7 @@ export default {
       .finally(() => (this.loading = false));
 
     window.addEventListener("keyup", event => {
-      if (event.keyCode === 13) {
+      if (event.code === 13) {
         this.pinZoom();
       }
     });
@@ -708,7 +710,7 @@ export default {
         this.resetMap();
       }
     },
-    resetMap() {
+    resetMap: function() {
       const mapComponent = this.$refs.map.mapObject;
       mapComponent.closePopup();
       this.bounds = LMap.latLngBounds([
@@ -716,24 +718,18 @@ export default {
         [45.645316, -124.588534]
       ]);
     },
-    resetZoom() {
-      if (this.mapVisible) {
-        this.bounds = LMap.latLngBounds([
-          [49.004521, -117.037357],
-          [45.645316, -124.588534]
-        ]);
-      }
-    },
+
     pinZoom: function() {
       const mapComponent = this.$refs.map.mapObject;
       var latLngs = this.selectedMapCoordinates;
       var lats = latLngs[1];
       var longs = latLngs[0];
-      var markerBounds = LMap.latLng([lats, longs]);
+      var markerBounds = L.latLng([lats, longs]);
       var zoomLev = mapComponent.getZoom();
       if (zoomLev < 12) {
         mapComponent.setView(markerBounds, 12);
       }
+      mapComponent.panTo(markerBounds);
     },
 
     setLocation: function() {
@@ -741,42 +737,17 @@ export default {
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
           function(position) {
-            let latlng = new LMap.LatLng(
+            let latlng = L.latLng(
               position.coords.latitude,
               position.coords.longitude
             );
-            document.addEventListener(
-              "click",
-              function(event) {
-                var imageSrc = event.target.src;
-                
-                if (
-                  imageSrc ==
-                  "https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png"
-                )
-                  mapComponent.setView(latlng, 12);
-              },
-              false
-            );
-
-            mapComponent.setView(latlng, 12);
+            
+            mapComponent.setView(latlng, 14);
             console.log(latlng);
 
-            var redIcon = new LMap.Icon({
-              iconUrl:
-                "https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png",
-              shadowUrl:
-                "https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png",
-              iconSize: [25, 41],
-              iconAnchor: [12, 41],
-              popupAnchor: [1, -34],
-              shadowSize: [41, 41]
-            });
-            // eslint-disable-next-line no-unused-vars
-            var redPin = new LMap.marker(latlng, { icon: redIcon })
-              .setZIndexOffset(5000)
-              .addTo(mapComponent)
-              .bindPopup("Your location");
+           
+           //mapComponent.panTo(latlng)
+
           },
           function(error) {
             console.log(error.message);
