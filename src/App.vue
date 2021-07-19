@@ -73,6 +73,7 @@ flex-direction: row;
 }
 .leaflet-marker-icon:focus {
   border-bottom: 3px solid blue;
+  z-index: 10000 !important;
 }
 
 @media only screen and (min-width: 992px) {
