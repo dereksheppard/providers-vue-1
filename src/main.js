@@ -2,10 +2,10 @@
 import Vue from 'vue';
 
 import App from './App.vue';
-
+import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import L from 'leaflet';
+
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
