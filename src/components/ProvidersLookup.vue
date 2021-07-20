@@ -6,8 +6,8 @@
         <!--PROVIDER FILTER START -->
         <div class="row">
           <div class="col">
-          <a id="viewMap" v-if="listVisible" class="btn btn-primary" href="#viewMap" v-on:click="mapVisible = true, listVisible = false">View by map <span class="fa fa-map" aria-hidden="true"></span></a>
-          <a v-if="mapVisible" id="viewList" class="btn btn-primary" href="#viewList" v-on:click="mapVisible = false, listVisible = true">View by list <span class="fa fa-list" aria-hidden="true"></span></a>
+          <a id="viewMap" v-if="listVisible" class="btn btn-link" href="#viewMap" v-on:click="mapVisible = true, listVisible = false" aria-label="View map">View by map <span class="fa fa-map" aria-hidden="true"></span></a>
+          <a v-if="mapVisible" id="viewList" class="btn btn-link" href="#viewList" v-on:click="mapVisible = false, listVisible = true" aria-label="View list">View by list <span class="fa fa-list" aria-hidden="true"></span></a>
         </div>
         </div>
 
@@ -39,7 +39,7 @@
                 </div>
                 <div id="dataTargetFilters" class="collapse" aria-labelledby="filterHeader" data-parent="#filterAccordion">
                   <div class="card-body">
-                                            <div class="row">
+                         <div class="row">
                           <div class="col-sm-6">
                             <h4>Choose services offered</h4>
                             <div class="form-group">
@@ -129,25 +129,57 @@
             <div class="col-sm-12" v-if="itemsCount < lessThan">
 
               <ul class="list-inline m-t-sm">
-                <li class="list-inline-item"><button v-if="itemsCount < lessThan" class="" v-on:click="resetForm">Clear all filters <span class="material-icons">
+                <li class="list-inline-item"><button v-if="itemsCount < lessThan" class="btn btn-link" v-on:click="resetForm" aria-label="Clear all filters">Clear all filters <span class="material-icons">
 cancel
 </span></button></li>
-                <li class="list-inline-item" v-if="selectedProvider"><button class="" v-on:click="selectedProvider = ''">{{this.selectedProvider}}</button></li>
-                <li class="list-inline-item" v-if="selectedMh"><button class="" v-on:click="selectedMh = ''">Mental Health</button></li>
-                <li class="list-inline-item"  v-if="selectedSud"><button class="" v-on:click="selectedSud = ''">Substance Use</button></li>
-                <li class="list-inline-item"  v-if="selectedCrisis"><button class="" v-on:click="selectedCrisis = ''">Crisis</button></li>
-                <li class="list-inline-item"  v-if="selectedOpioid"><button class="" v-on:click="selectedOpioid = ''">Opioid Treatment</button></li>
-                <li class="list-inline-item"  v-if="selectedDetox"><button class="" v-on:click="selectedDetox= ''">Detox</button></li>
-                <li class="list-inline-item"  v-if="selectedHousing"><button class="" v-on:click="selectedHousing = ''">Housing</button></li>
-                <li class="list-inline-item"  v-if="selectedSudres"><button class="" v-on:click="selectedSudres = ''">Residential Substance Use Treatment</button></li>
-                <li class="list-inline-item"  v-if="selectedMhres"><button class="" v-on:click="selectedMhres= ''">Residential Mental Health Treatment</button></li>
-                <li class="list-inline-item"  v-if="selectedInvoluntary"><button class="" v-on:click="selectedInvoluntary = ''">Involuntary Commmitment</button></li>
-                <li class="list-inline-item"  v-if="selectedLocations"><button class="" v-on:click="selectedLocations = ''">{{this.selectedLocations}}</button></li>
-                <li class="list-inline-item"  v-if="searchText"><button class="" v-on:click="searchText = ''">{{this.searchText}}</button></li>
-                <li class="list-inline-item"  v-if="selectedYouth"><button class="" v-on:click="selectedYouth = ''">Youth</button></li>
-                <li class="list-inline-item"  v-if="selectedAdults"><button class="" v-on:click="selectedAdults = ''">Adults</button></li>
-                <li class="list-inline-item"  v-if="selectedFamilies"><button class="" v-on:click="selectedFamilies = ''">Families</button></li>
-                <li class="list-inline-item"  v-if="selectedOlder"><button class="" v-on:click="selectedOlder = ''">Older Adults</button></li>
+                <li class="list-inline-item" v-if="selectedProvider"><button class="btn btn-link" v-on:click="selectedProvider = ''" aria-label="Clear this filter">{{this.selectedProvider}} <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item" v-if="selectedMh"><button class="btn btn-link" v-on:click="selectedMh = ''" aria-label="Clear this filter">Mental Health <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedSud"><button class="btn btn-link" v-on:click="selectedSud = ''" aria-label="Clear this filter">Substance Use <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedCrisis"><button class="btn btn-link" v-on:click="selectedCrisis = ''" aria-label="Clear this filter">Crisis <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedOpioid"><button class="btn btn-link" v-on:click="selectedOpioid = ''" aria-label="Clear this filter">Opioid Treatment <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedDetox"><button class="btn btn-link" v-on:click="selectedDetox= ''" aria-label="Clear this filter">Detox <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedHousing"><button class="btn btn-link" v-on:click="selectedHousing = ''" aria-label="Clear this filter">Housing <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedSudres"><button class="btn btn-link" v-on:click="selectedSudres = ''" aria-label="Clear this filter">Residential Substance Use Treatment <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedMhres"><button class="btn btn-link" v-on:click="selectedMhres= ''" aria-label="Clear this filter">Residential Mental Health Treatment <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedInvoluntary"><button class="btn btn-link" v-on:click="selectedInvoluntary = ''" aria-label="Clear this filter">Involuntary Commmitment <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedLocations"><button class="btn btn-link" v-on:click="selectedLocations = ''" aria-label="Clear this filter">{{this.selectedLocations}} <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="searchText"><button class="btn btn-link" v-on:click="searchText = ''" aria-label="Clear this filter">{{this.searchText}} <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedYouth"><button class="btn btn-link" v-on:click="selectedYouth = ''" aria-label="Clear this filter">Youth <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedAdults"><button class="btn btn-link" v-on:click="selectedAdults = ''" aria-label="Clear this filter">Adults <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedFamilies"><button class="btn btn-link" v-on:click="selectedFamilies = ''" aria-label="Clear this filter">Families <span class="material-icons">
+cancel
+</span></button></li>
+                <li class="list-inline-item"  v-if="selectedOlder"><button class="btn btn-link" v-on:click="selectedOlder = ''" aria-label="Clear this filter">Older Adults <span class="material-icons">
+cancel
+</span></button></li>
 
               </ul>
             </div>
@@ -174,10 +206,9 @@ cancel
             </div>
             <div class="panel-body">
               <p>Try refining your search or filters to see if there are any providers that match.</p>
-              <p class="text-center"><button class="btn btn-xs btn-danger" v-on:click="resetForm">Clear all filters</button></p><br>
-            </div>
+              <button class="btn btn-xs btn-link" v-on:click="resetForm" aria-label="Clear all filters">Clear all filters</button>
           </div>
-
+          </div>
         </section>
         <!-- NO RESULTS MESSAGE END -->
 
@@ -218,8 +249,8 @@ cancel
 
                       <div class="row">
                         <div class="col-sm-12">
-                          <h4 class="m-t-0 h5" v-if="items.mental_health || items.substance_use || items.opioid || items.detox || items.crisis_services || items.involuntary || items.housing || items.sud_residential || items.mh_residential">Services</h4>
-                          <ul class="list-unstyled service-list">
+                          <h4 class="" v-if="items.mental_health || items.substance_use || items.opioid || items.detox || items.crisis_services || items.involuntary || items.housing || items.sud_residential || items.mh_residential">Services</h4>
+                          <ul class="list-unstyled">
                             <li v-if="items.mental_health"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Mental Health</li>
                             <li v-if="items.substance_use"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Substance Use</li>
                             <li v-if="items.opioid"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Opioid treatment</li>
@@ -274,7 +305,7 @@ cancel
                     <div class="col-md-8 col-md-push-4 p-x-0">
                       <!-- MAP START -->
                       
-                      <button type="button" id="setLocation" @click="setLocation()" class="findControls btn btn-sm btn-success">Zoom to my location <span class="fa fa-crosshairs" aria-hidden="true"></span></button>
+                      <button type="button" id="setLocation" @click="setLocation()" class="findControls btn btn-sm btn-link">Zoom to my location <span class="fa fa-crosshairs" aria-hidden="true"></span></button>
         
                       <l-map id="map" ref="map" :center="center" :bounds="bounds">
         
@@ -328,8 +359,8 @@ cancel
 
                       <div class="row">
                         <div class="col-sm-12">
-                          <h4 class="m-t-0 h5" v-if="items.mental_health || items.substance_use || items.opioid || items.detox || items.crisis_services || items.involuntary || items.housing || items.sud_residential || items.mh_residential">Services</h4>
-                          <ul class="list-unstyled service-list">
+                          <h4 class="" v-if="items.mental_health || items.substance_use || items.opioid || items.detox || items.crisis_services || items.involuntary || items.housing || items.sud_residential || items.mh_residential">Services</h4>
+                          <ul class="list-unstyled">
                             <li v-if="items.mental_health"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Mental Health</li>
                             <li v-if="items.substance_use"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Substance Use</li>
                             <li v-if="items.opioid"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Opioid treatment</li>

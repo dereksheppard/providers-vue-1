@@ -41,9 +41,17 @@ body {
 }
 .card-body {
   padding: 1.5rem;
-
 }
-
+.accordion .card .card-header button span, .accordion .card:not(:last-of-type) .card-header button span {
+    right: unset;
+    top: 10px;
+}
+#filterButtons li button {
+    font-size: 14px;
+}
+#filterButtons .material-icons {
+    font-size: 14px;
+}
 .mapFlex {
   width: 100%;
   overflow-y: hidden;
@@ -66,7 +74,7 @@ flex-direction: row;
 .findControls {
   z-index: 1000;
   position: absolute;
-  bottom: -35px;
+  bottom: -45px;
   left: 50%;
   -webkit-transform: translateX(-50%);
   transform: translateX(-50%);
@@ -94,17 +102,9 @@ flex-direction: row;
   #viewingTotal {
     display: none;
   }
-  .providerHeader {
-    height: 60px;
-  }
-  .providerHeader h3 {
-    color: white;
-    font-size: 16px;
-  }
-  .leaflet-popup h3 {
-    font-size: 14px;
-    max-width: 75%;
-  }
+
+
+
 }
 
 </style>
