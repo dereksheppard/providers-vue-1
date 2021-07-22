@@ -41,9 +41,9 @@
                   <div class="card-body">
                          <div class="row">
                           <div class="col-sm-6">
-                            <h4>Choose services offered</h4>
+                            <label for="service-list">Choose services offered</label>
                             <div class="form-group">
-                              <ul class="list-unstyled">
+                              <ul class="list-unstyled" id="service-list">
                                 <li><label><input type="checkbox" v-model="selectedMh" name="services">
                                                                   Mental Health</label></li>
                                 <li><label><input type="checkbox" v-model="selectedSud" name="services">
@@ -98,8 +98,8 @@
                         </div>
                  
                         <div class="form-group">
-                          <h4>Choose audiences served</h4>
-                          <ul class="list-unstyled">
+                          <label for="audience-list">Choose audiences served</label>
+                          <ul class="list-unstyled" id="audience-list">
                             <li><label><input type="checkbox" v-model="selectedAdults" name="audience">
                                                           Adults</label></li>
                             <li><label><input type="checkbox" v-model="selectedYouth" name="audience">
@@ -192,19 +192,19 @@ cancel
         <!--PROVIDER FILTER END -->
         <section id="errorMessage" v-if="errored">
 
-          <p class="well">We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
+          <p class="card border">We're sorry, we're not able to retrieve this information at the moment, please try back later</p>
 
         </section>
 
         <!-- NO RESULTS MESSAGE START -->
         <section id="noResults" v-if="!loading && !computed_items.length && !errored">
 
-          <div class="panel panel-danger">
-            <div class="panel-heading">
-              <h3 class="panel-title">Hmm... we couldn't find any results</h3>
-
-            </div>
-            <div class="panel-body">
+          <div class="card border">
+              <div  class="card-title">
+              <h3>Hmm... we couldn't find any results</h3>
+              </div>
+         
+            <div class="card-body">
               <p>Try refining your search or filters to see if there are any providers that match.</p>
               <button class="btn btn-xs btn-link" v-on:click="resetForm" aria-label="Clear all filters">Clear all filters</button>
           </div>
@@ -216,9 +216,12 @@ cancel
         <section v-else>
           <!--LOADING ICON START -->
           <div class="row">
-            <div class="col-sm-8">
-              <div v-if="loading" class="text-center m-a-lg"><span class="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></span>
-                <span class="sr-only">Loading...</span></div>
+            <div class="col">
+              <div v-if="loading" class="text-center m-a-lg">
+                <div class="spinner-border" role="status">
+                 <span class="sr-only">Loading...</span>
+                </div>
+              </div>
             </div>
         </div>
 
@@ -230,7 +233,7 @@ cancel
 
               <!--PROVIDER INFO CARD START -->
 
-              <div class="shadow card h-100">
+              <div class="shadow border card h-100">
                   
 
                 <div class="card-body">
@@ -239,9 +242,9 @@ cancel
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="contacts">
-                        <p v-if="items.phone"><span class="fa fa-phone fa-color-info" aria-hidden="true"></span> <a :title="items.phone" :href="'tel:' + items.phone">{{items.phone}}</a></p>
-                        <p><span class="fa fa-globe fa-color-info" aria-hidden="true"></span> <a v-if="items.website" target="_blank" :title="items.provider" :href="items.website">Website</a></p>
-                        <p v-if="items.address_address"><span class="fa fa-map-marker fa-color-info" aria-hidden="true"></span> <a target="_blank" :href="'https://www.google.com/maps/dir//' + items.address_address + ', ' + items.address_city + ', ' + items.address_state + ' ' + items.address_zip">Get directions</a></p>
+                        <p v-if="items.phone"><a :title="items.phone" :href="'tel:' + items.phone">{{items.phone}}</a></p>
+                        <p><a v-if="items.website" target="_blank" :title="items.provider" :href="items.website">Website</a></p>
+                        <p v-if="items.address_address"><a target="_blank" :href="'https://www.google.com/maps/dir//' + items.address_address + ', ' + items.address_city + ', ' + items.address_state + ' ' + items.address_zip">Get directions</a></p>
 
                       </div>
                     </div>
@@ -251,15 +254,15 @@ cancel
                         <div class="col-sm-12">
                           <h4 class="" v-if="items.mental_health || items.substance_use || items.opioid || items.detox || items.crisis_services || items.involuntary || items.housing || items.sud_residential || items.mh_residential">Services</h4>
                           <ul class="list-unstyled">
-                            <li v-if="items.mental_health"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Mental Health</li>
-                            <li v-if="items.substance_use"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Substance Use</li>
-                            <li v-if="items.opioid"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Opioid treatment</li>
-                            <li v-if="items.detox"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Detox</li>
-                            <li v-if="items.crisis_services"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Crisis Services</li>
-                            <li v-if="items.involuntary"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Involuntary Committment</li>
-                            <li v-if="items.housing"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Housing Assistance</li>
-                            <li v-if="items.sud_residential"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Residential substace use treatment</li>
-                            <li v-if="items.mh_residential"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Residential mental health treatment</li>
+                            <li v-if="items.mental_health">Mental Health</li>
+                            <li v-if="items.substance_use">Substance Use</li>
+                            <li v-if="items.opioid">Opioid Treatment</li>
+                            <li v-if="items.detox">Detox</li>
+                            <li v-if="items.crisis_services">Crisis Services</li>
+                            <li v-if="items.involuntary">Involuntary Committment</li>
+                            <li v-if="items.housing">Housing Assistance</li>
+                            <li v-if="items.sud_residential">Residential Substance Use Treatment</li>
+                            <li v-if="items.mh_residential">Residential Mental Health Treatment</li>
                           </ul>
                         </div>
 
@@ -278,12 +281,12 @@ cancel
                       <p v-if="items.locations"><strong>Area served:</strong> {{items.locations}}</p>
 
                       <ul class="list-inline">
-                        <li v-if="items.adults || items.youth || items.older_adults || items.families"><strong>Groups
+                        <li class="list-inline-item" v-if="items.adults || items.youth || items.older_adults || items.families"><strong>Groups
                                                     served:</strong></li>
-                        <li v-if="items.adults">Adults</li>
-                        <li v-if="items.youth">Youth</li>
-                        <li v-if="items.older_adults">Older adults</li>
-                        <li v-if="items.families">Families</li>
+                        <li class="list-inline-item" v-if="items.adults">Adults</li>
+                        <li class="list-inline-item" v-if="items.youth">Youth</li>
+                        <li class="list-inline-item" v-if="items.older_adults">Older adults</li>
+                        <li class="list-inline-item" v-if="items.families">Families</li>
                       </ul>
 
                     </div>
@@ -305,7 +308,7 @@ cancel
                     <div class="col-md-8 col-md-push-4 p-x-0">
                       <!-- MAP START -->
                       
-                      <button type="button" id="setLocation" @click="setLocation()" class="findControls btn btn-sm btn-link">Zoom to my location <span class="fa fa-crosshairs" aria-hidden="true"></span></button>
+                      <button type="button" id="setLocation" @click="setLocation()" class="findControls btn btn-sm btn-link">Zoom to my location</button>
         
                       <l-map id="map" ref="map" :center="center" :bounds="bounds">
         
@@ -329,10 +332,10 @@ cancel
         
                       <div class="mapLoad p-a" v-if="!selectedMapAddress">
                         <h2 class="text-center">Search, filter or explore the map</h2>
-                        <img class="text-center" src="https://unpkg.com/leaflet@1.2.0/dist/images/marker-icon.png">
+                        <div class="d-flex justify-content-center"><img class="text-center" src="https://unpkg.com/leaflet@1.2.0/dist/images/marker-icon.png"></div>
                         <p>Click or tap a blue pin and details about that provider will appear in this space.</p>
                        
-                        <p>To find providers near you, click or tap the "Zoom to my location" button at the bottom of the map to zoom in to your current location. (NOTE: You'll need to enable location services on your browser or phone for this feature to work.)</p>
+                        <p>To find providers near you, click or tap "Zoom to my location" to center the map to your current location. (NOTE: You'll need to enable location services on your browser or phone for this feature to work.)</p>
                         
                          
                           <p>To narrow the results, use the search bar or click the filters button.</p>
@@ -340,7 +343,7 @@ cancel
                       </div>
                       <div :key="i" v-for="(items, i) in computed_map" class="providerContainer flex-container">
         
-                        <div v-if="selectedMapAddress" class="card h-100">
+                <div v-if="selectedMapAddress" class="card border h-100">
                   
 
                 <div class="card-body h-100">
@@ -349,9 +352,9 @@ cancel
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="contacts">
-                        <p v-if="items.phone"><span class="fa fa-phone fa-color-info" aria-hidden="true"></span> <a :title="items.phone" :href="'tel:' + items.phone">{{items.phone}}</a></p>
-                        <p><span class="fa fa-globe fa-color-info" aria-hidden="true"></span> <a v-if="items.website" target="_blank" :title="items.provider" :href="items.website">Website</a></p>
-                        <p v-if="items.address_address"><span class="fa fa-map-marker fa-color-info" aria-hidden="true"></span> <a target="_blank" :href="'https://www.google.com/maps/dir//' + items.address_address + ', ' + items.address_city + ', ' + items.address_state + ' ' + items.address_zip">Get directions</a></p>
+                        <p v-if="items.phone"><a :title="items.phone" :href="'tel:' + items.phone">{{items.phone}}</a></p>
+                        <p><a v-if="items.website" target="_blank" :title="items.provider" :href="items.website">Website</a></p>
+                        <p v-if="items.address_address"><a target="_blank" :href="'https://www.google.com/maps/dir//' + items.address_address + ', ' + items.address_city + ', ' + items.address_state + ' ' + items.address_zip">Get directions</a></p>
 
                       </div>
                     </div>
@@ -361,15 +364,15 @@ cancel
                         <div class="col-sm-12">
                           <h4 class="" v-if="items.mental_health || items.substance_use || items.opioid || items.detox || items.crisis_services || items.involuntary || items.housing || items.sud_residential || items.mh_residential">Services</h4>
                           <ul class="list-unstyled">
-                            <li v-if="items.mental_health"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Mental Health</li>
-                            <li v-if="items.substance_use"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Substance Use</li>
-                            <li v-if="items.opioid"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Opioid treatment</li>
-                            <li v-if="items.detox"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Detox</li>
-                            <li v-if="items.crisis_services"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Crisis Services</li>
-                            <li v-if="items.involuntary"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Involuntary Committment</li>
-                            <li v-if="items.housing"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Housing Assistance</li>
-                            <li v-if="items.sud_residential"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Residential substace use treatment</li>
-                            <li v-if="items.mh_residential"><span class="fa fa-check-circle fa-color-success" aria-hidden="true"></span> Residential mental health treatment</li>
+                            <li v-if="items.mental_health">Mental Health</li>
+                            <li v-if="items.substance_use">Substance Use</li>
+                            <li v-if="items.opioid">Opioid treatment</li>
+                            <li v-if="items.detox">Detox</li>
+                            <li v-if="items.crisis_services">Crisis Services</li>
+                            <li v-if="items.involuntary">Involuntary Committment</li>
+                            <li v-if="items.housing">Housing Assistance</li>
+                            <li v-if="items.sud_residential">Residential substace use treatment</li>
+                            <li v-if="items.mh_residential">Residential mental health treatment</li>
                           </ul>
                         </div>
 
@@ -388,12 +391,11 @@ cancel
                       <p v-if="items.locations"><strong>Area served:</strong> {{items.locations}}</p>
 
                       <ul class="list-inline">
-                        <li v-if="items.adults || items.youth || items.older_adults || items.families"><strong>Groups
-                                                    served:</strong></li>
-                        <li v-if="items.adults">Adults</li>
-                        <li v-if="items.youth">Youth</li>
-                        <li v-if="items.older_adults">Older adults</li>
-                        <li v-if="items.families">Families</li>
+                        <li class="list-inline-item" v-if="items.adults || items.youth || items.older_adults || items.families"><strong>Groups served:</strong></li>
+                        <li class="list-inline-item" v-if="items.adults">Adults</li>
+                        <li class="list-inline-item" v-if="items.youth">Youth</li>
+                        <li class="list-inline-item" v-if="items.older_adults">Older adults</li>
+                        <li class="list-inline-item" v-if="items.families">Families</li>
                       </ul>
 
                     </div>
@@ -413,7 +415,7 @@ cancel
 import { LMap, LTileLayer, LMarker} from 'vue2-leaflet';
 import axios from 'axios';
 export default {
-  name: 'HelloWorld',
+  name: 'ProvidersLookup',
   components: {
     LMap,
     LTileLayer,
